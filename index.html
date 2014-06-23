@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text String Distance Explorer</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Text String Distance Explorer">
+  <meta name="author" content="Peter Davis">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Text String Distance Explorer</h1>
+    <h2>A utility for comparing the number of required tranformations to match text strings</h2>
+    <p>Peter Davis<br/>Coursera Developing Data products</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Text String Distance Explorer</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This project is to allow us to interactively explore how different two text strings are by measuring their &quot;distance.&quot;</p>
+
+<p>String distance is a measure of the number of operations that it will take to transform one string to another. It is a way to compare of how far apart two strings are from each other as measured by operations.   </p>
+
+<p>For example, if we wanted to transform &quot;James&quot; into &quot;Janine&quot; we might do the following steps:</p>
+
+<ul>
+<li>James</li>
+<li>Janes</li>
+<li>Janis</li>
+<li>Janin</li>
+<li>Janine</li>
+</ul>
+
+<p>So we have changed 3 letters and added another letter for a total of 4 operations.  This transformation give us one measure of how closely James and Janine are related.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Why explore string distances?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>There are several motivators for looking at string distances:</p>
+
+<ul>
+<li>To better understand how string comparisons work.</li>
+<li>To explore a variety of algorithms and their outputs.</li>
+<li>To improve deduplication alorithms.</li>
+</ul>
+
+<p>This project is motivated by improvements to existing deduplication algorithms that I have seen on Customer Relationship Management Systems.  They typically utilize a very simplistic model for finding duplicates. </p>
+
+<p>As an initial pass we used adist to give relative scores on comparisons of data.  </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Primary Algorithm</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>For this first build of the application, we are using the adist algorithm. The two primary parameters of adist are the strings to compare, other parameters are optional.</p>
+
+<p>An example of the algorithm in action:</p>
+
+<pre><code class="r">adist(&quot;James&quot;, &quot;Janine&quot;, partial = FALSE)
+</code></pre>
+
+<pre><code>##      [,1]
+## [1,]    4
+</code></pre>
+
+<p>The counts for each operation (insert, delete and substution) are:</p>
+
+<pre><code class="r">drop(attr(adist(&quot;James&quot;, &quot;Janine&quot;, counts = TRUE), &quot;counts&quot;))
+</code></pre>
+
+<pre><code>## ins del sub 
+##   1   0   3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Exploration Interface</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The initial interface for the application is quite simple.  </p>
+
+<p>One may enter a starting text string and an ending text string in the left hand panel.</p>
+
+<p>Distances are calculated in real time and are shown to the right of the input area.  </p>
+
+<p>The number of substitutions, deletions and modifications are shown to the end user.  </p>
+
+<p>There are a number of improvements to be made to the simplified interface:</p>
+
+<ul>
+<li>Tabbed output for additional algorithms</li>
+<li>Better layouts</li>
+<li>Additional widgets for turning on/off counts or other elements</li>
+<li>Improved HTML output</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Future use and development</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>As development continues, I would like to add in additional algorithms and functionality for comparison.</p>
+
+<p>For instance, the SQL Server SOUNDEX algorithm is good for checking non numeric strings.  For non numerics it would be interesting to directly compare this against the success of the adist implementation.</p>
+
+<p>I would also add in more sophisticated handling of input strings.  E.g. an option to remove spaces to make strings more compact as well as breaking leading numerics off into their own comparison string.  This would result in better handling of address comparisons.  </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Text String Distance Explorer'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Why explore string distances?'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Primary Algorithm'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Exploration Interface'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Future use and development'>
+         5
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
